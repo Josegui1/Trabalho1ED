@@ -26,13 +26,23 @@ ReservationSystem::~ReservationSystem(){
 
     }
 
-    delete reservations;
-    delete room_capacities;
+    delete[] reservations;
+    delete[] room_capacities;
 
 }
 
 bool ReservationSystem::reserve(ReservationRequest request) {
-    return false; // temp
+
+    for (int i = 0; i < room_count;) {
+
+        if (room_capacities[i] < request.getStudentCount()){
+            i++;
+        }
+
+        ReservationNode* current = reservations[i];
+        if (current.getStartHour() < request.getEndHour())
+        return 0;
+    }
 }
 
 bool ReservationSystem::cancel(std::string course_name) {
