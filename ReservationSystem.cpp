@@ -39,11 +39,34 @@ bool ReservationSystem::reserve(ReservationRequest request) {
             i++;
         }
 
+        bool conflito = false;
         ReservationNode* current = reservations[i];
-        if (current.getStartHour() < request.getEndHour())
+        while(current != nullptr) {
+            if(current->weekday == request.getWeekday() && current->start_hour < request.getStartHour()
+        && current->end_hour < request.getEndHour()) {
+            conflito = true;
+            break;
+        }
+            current = current->next;
+        }
+        if (conflito = true) {
+            i++;
+        } else {
+            ReservationNode* new_reservation = new ReservationNode;
+            new_reservation->course_name = request.getCourseName();
+            new_reservation->weekday = request.getWeekday();
+            new_reservation->start_hour = request.getStartHour();
+            new_reservation->end_hour = request.getEndHour();
+            new_reservation->room_index = i;
+            new_reservation->next = reservations[i];
+            reservations[i] = new_reservation;
+            return true;
+        }
+
+        }
         return 0;
     }
-}
+
 
 bool ReservationSystem::cancel(std::string course_name) {
     return false; // temp
