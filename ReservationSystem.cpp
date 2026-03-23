@@ -30,3 +30,15 @@ ReservationSystem::~ReservationSystem(){
     delete room_capacities;
 
 }
+
+bool ReservationSystem::reserve(ReservationRequest request) {
+    return false; // temp
+}
+
+bool ReservationSystem::cancel(std::string course_name) {
+    return false; // temp
+}
+
+void ReservationSystem::printSchedule() {
+
+}
