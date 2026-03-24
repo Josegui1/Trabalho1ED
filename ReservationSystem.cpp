@@ -54,11 +54,8 @@ bool ReservationSystem::reserve(ReservationRequest request) {
             current = current->next;
         }
 
-        if (conflito) {
-            continue; // sala ocupada nesse horário, testa a próxima
-        }
-
-        // Sala disponível! Cria o novo nó e insere no início da lista
+        if (!conflito) {
+             // Sala disponível! Cria o novo nó e insere no início da lista
         ReservationNode* novo = new ReservationNode();
         novo->course_name = request.getCourseName();
         novo->weekday     = request.getWeekday();
@@ -68,7 +65,10 @@ bool ReservationSystem::reserve(ReservationRequest request) {
         novo->next        = reservations[i];
         reservations[i]   = novo;
 
-        return true; // reserva realizada com sucesso
+        return true; // reserva realizada com sucesso // sala ocupada nesse horário, testa a próxima
+        }
+
+       
     }
 
     return false; // nenhuma sala disponível
