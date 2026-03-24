@@ -39,8 +39,8 @@ int main() {
     else
         std::cout << "Falha na reserva." << std::endl;
 
-    std::cout << "\n=== Teste 2: Conflito de horario ===" << std::endl;
-    ReservationRequest r2("Calculo", "segunda", 8, 10, 25);
+    std::cout << "\n=== Teste 2: Teste de Capacidade ===" << std::endl;
+    ReservationRequest r2("Calculo", "segunda", 8, 10, 95);
     if (system.reserve(r2))
         std::cout << "Reserva realizada com sucesso!" << std::endl;
     else

@@ -32,40 +32,47 @@ ReservationSystem::~ReservationSystem(){
 }
 
 bool ReservationSystem::reserve(ReservationRequest request) {
+    // Percorre cada sala em ordem
+    for (int i = 0; i < room_count; i++) {
 
-    for (int i = 0; i < room_count;) {
-
-        if (room_capacities[i] < request.getStudentCount()){
-            i++;
+        // Verifica se a sala tem capacidade suficiente
+        if (room_capacities[i] < request.getStudentCount()) {
+            continue; // sala muito pequena, testa a próxima
         }
 
+        // Verifica se há conflito de horário nessa sala
         bool conflito = false;
         ReservationNode* current = reservations[i];
-        while(current != nullptr) {
-            if(current->weekday == request.getWeekday() && current->start_hour < request.getStartHour()
-        && current->end_hour < request.getEndHour()) {
-            conflito = true;
-            break;
-        }
+        while (current != nullptr) {
+            // Mesmo dia E horários se sobrepõem?
+            if (current->weekday == request.getWeekday() &&
+                current->start_hour < request.getEndHour() &&
+                current->end_hour > request.getStartHour()) {
+                conflito = true;
+                break;
+            }
             current = current->next;
         }
-        if (conflito = true) {
-            i++;
-        } else {
-            ReservationNode* new_reservation = new ReservationNode;
-            new_reservation->course_name = request.getCourseName();
-            new_reservation->weekday = request.getWeekday();
-            new_reservation->start_hour = request.getStartHour();
-            new_reservation->end_hour = request.getEndHour();
-            new_reservation->room_index = i;
-            new_reservation->next = reservations[i];
-            reservations[i] = new_reservation;
-            return true;
+
+        if (conflito) {
+            continue; // sala ocupada nesse horário, testa a próxima
         }
 
-        }
-        return 0;
+        // Sala disponível! Cria o novo nó e insere no início da lista
+        ReservationNode* novo = new ReservationNode();
+        novo->course_name = request.getCourseName();
+        novo->weekday     = request.getWeekday();
+        novo->start_hour  = request.getStartHour();
+        novo->end_hour    = request.getEndHour();
+        novo->room_index  = i;
+        novo->next        = reservations[i];
+        reservations[i]   = novo;
+
+        return true; // reserva realizada com sucesso
     }
+
+    return false; // nenhuma sala disponível
+}
 
 
 bool ReservationSystem::cancel(std::string course_name) {
