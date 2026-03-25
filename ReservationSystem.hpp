@@ -26,6 +26,9 @@ private:
 
     // Estruturas internas escolhidas pelos alunos
     // para armazenar e gerenciar as reservas, os horários, ...
+    // Essas funcoes serao utilizadas internamentes para ajudar a reservar as salas de modo ordenado
+    int dayToNumber(std::string weekday);
+    bool comesBefore(std::string weekday1, int start1, std::string weekday2, int start2);
 
 public:
 
