@@ -1,18 +1,3 @@
-// #include <iostream>
-// #include "ReservationRequest.hpp"
-
-// int main(){
-//     ReservationRequest request("Linear Algebra", "segunda", 9, 11, 40);
-
-//     std::cout << request.getCourseName() << std::endl;
-//     std::cout << request.getStudentCount() << std::endl;
-//     std::cout << request.getStartHour() << std::endl;
-//     std::cout << request.getEndHour()<< std::endl;
-//     std::cout << request.getWeekday() << std::endl;
-
-//     return 0;
-// }
-
 #include <iostream>
 #include "ReservationSystem.hpp"
 #include "ReservationRequest.hpp"
@@ -45,6 +30,13 @@ int main() {
         std::cout << "Reserva realizada com sucesso!" << std::endl;
     else
         std::cout << "Sem salas disponiveis nesse horario." << std::endl;
+    
+
+    std::cout<< "\n === Teste 3: Teste de Cancelamento ===" << std::endl;
+    if(system.cancel("Estruturas de Dados") )
+        std::cout << "Reserva cancelada com sucesso!" << std::endl;
+    else
+        std::cout << "Falha ao cancelar reserva." << std::endl;
 
     std::cout << "\n=== Grade atual ===" << std::endl;
     system.printSchedule();
